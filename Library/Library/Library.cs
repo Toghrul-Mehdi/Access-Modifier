@@ -11,71 +11,65 @@ namespace Library
 {
     internal class Library
     {
-        public Book[] Books { get; set; }
-        public int _index;
+        public Book[] Books;   
 
 
-        public Library(int size)
+        public Library()
         {
-            Books = new Book[size];
-            _index = 0;
+            Books = new Book[0];            
         }
 
 
         public void AddBook(Book book)
         {
-            if (_index < Books.Length)
+            Array.Resize(ref Books, Books.Length+1);
+            Books[Books.Length-1] = book;
+        }
+
+
+        public void GetFilteredBooks(string genre)
+        {
+            for (int i = 0; i < Books.Length; i++)
             {
-                Books[_index++] = book;
-            }
-            else
-            {
-                Console.WriteLine("Kitabxana doludu!");
+                if(Books[i].Genre == genre)
+                {
+                    Console.Write(Books[i].No + " ");
+                    Console.Write(Books[i].Name + " ");
+                    Console.Write(Books[i].Price + " ");
+                    Console.Write(Books[i].Genre + " ");
+                    Console.WriteLine();
+                }
             }
         }
 
 
-        public Book[] GetFilteredBooks(string genre)
+        public void GetFilteredBooks(decimal minPrice, decimal maxPrice)
         {
-            List<Book> filteredBooks = new List<Book>();
-
-            for (int i = 0; i < Books.Length; i++)
+            for(int i = 0;i < Books.Length;i++)
             {
-                if (Books[i] != null && Books[i].Genre == genre)
+                if(minPrice < Books[i].Price && maxPrice >= Books[i].Price)
                 {
-                    filteredBooks.Add(Books[i]);
+                    Console.Write(Books[i].No + " ");
+                    Console.Write(Books[i].Name + " ");
+                    Console.Write(Books[i].Price + " ");
+                    Console.Write(Books[i].Genre + " ");
+                    Console.WriteLine();
                 }
             }
-            return filteredBooks.ToArray();
-        }
 
-
-        public Book[] GetFilteredBooks(decimal minPrice, decimal maxPrice)
-        {
-            List<Book> filteredBooks = new List<Book>();
-
-
-            for (int i = 0; i < Books.Length; i++)
-            {
-
-                if (Books[i] != null && Books[i].Price >= minPrice && Books[i].Price <= maxPrice)
-                {
-                    filteredBooks.Add(Books[i]);
-                }
-            }
-            return filteredBooks.ToArray();
         }
 
 
 
         public void ShowAllBooks()
         {
-            foreach (var book in Books)
+            for (int i = 0; i < Books.Length; i++)
             {
-                if (book != null)
-                {
-                    book.ShowInfo();
-                }
+                Console.Write(Books[i].No+" ");
+                Console.Write(Books[i].Name + " ");
+                Console.Write(Books[i].Price + " ");
+                Console.Write(Books[i].Genre + " ");
+                Console.WriteLine();
             }
         }
 
